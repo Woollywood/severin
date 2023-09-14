@@ -58,7 +58,7 @@ window.addEventListener('load', (windowEvent) => {
 							scrollTrigger: {
 								trigger: advantagesBody,
 								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides),
+								end: getScrollHeight(sliderWrapper, e.slides, 3),
 								pin: true,
 								scrub: 1,
 								invalidateOnRefresh: true,
@@ -69,7 +69,7 @@ window.addEventListener('load', (windowEvent) => {
 							scrollTrigger: {
 								trigger: slider,
 								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides),
+								end: getScrollHeight(sliderWrapper, e.slides, 3),
 								scrub: 1,
 								invalidateOnRefresh: true,
 								onUpdate: ({ progress }) => {
@@ -96,7 +96,7 @@ window.addEventListener('load', (windowEvent) => {
 							scrollTrigger: {
 								trigger: advantagesBody,
 								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 2),
+								end: getScrollHeight(sliderWrapper, e.slides, 4),
 								pin: true,
 								scrub: 1,
 								invalidateOnRefresh: true,
@@ -107,7 +107,7 @@ window.addEventListener('load', (windowEvent) => {
 							scrollTrigger: {
 								trigger: slider,
 								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 2),
+								end: getScrollHeight(sliderWrapper, e.slides, 4),
 								scrub: 1,
 								invalidateOnRefresh: true,
 								onUpdate: ({ progress }) => {
