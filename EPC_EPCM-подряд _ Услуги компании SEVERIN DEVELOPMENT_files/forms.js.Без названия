@@ -1,0 +1,254 @@
+$(document).on('submit', '#popup-call-form', function (e) {
+    e.preventDefault();
+    console.log('Заказать звонок');
+
+    let errors = 0;
+    $(this).find('input').each(function () {
+        // Проверяем значения
+        let required = $(this).attr('data-required');
+        if (required !== undefined) {
+            let value = $(this).val();
+            let type = $(this).attr('type');
+            if (type === 'phone') {
+                if (value.length < 18) {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            } else if (type === 'checkbox') {
+
+                if ($(this).is(':checked')) {
+                    $('.js-checkbox').removeClass('_invalid');
+                } else {
+                    $('.js-checkbox').addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                }
+            } else {
+                if (value === '') {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            }
+        }
+
+    });
+
+    if (errors <= 0) {
+
+        let form_data = $(this).serialize();
+
+        $.ajax({
+            url: '/local/ajax/forms/CallForm.php',
+            method: 'POST',
+            dataType: 'html',
+            data: form_data,
+            success: function (response) {
+                console.log(response);
+                popupClose(e.target.closest('.popup'));
+                popupOpen(document.getElementById('popup'));
+            }
+        })
+    }
+});
+
+$(document).on('submit', '#popup-email-form', function (e) {
+    e.preventDefault();
+    console.log('Написать сообщение');
+
+    let errors = 0;
+    let errors_blocks = [];
+    $(this).find('input').each(function () {
+        // Проверяем значения
+        let required = $(this).attr('data-required');
+        if (required !== undefined) {
+            let value = $(this).val();
+            let type = $(this).attr('type');
+            if (type === 'phone') {
+                if (value.length < 18) {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            } else if (type === 'checkbox') {
+                if ($(this).is(':checked')) {
+                    $('.js-checkbox').removeClass('_invalid');
+                } else {
+                    $('.js-checkbox').addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                }
+            } else {
+                if (value === '') {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            }
+        }
+
+    });
+
+    if (errors <= 0) {
+
+        let form_data = $(this).serialize();
+
+        $.ajax({
+            url: '/local/ajax/forms/EmailForm.php',
+            method: 'POST',
+            dataType: 'html',
+            data: form_data,
+            success: function (response) {
+
+                popupClose(e.target.closest('.popup'));
+                popupOpen(document.getElementById('popup'));
+            }
+        })
+    }
+});
+
+
+
+$(document).on('submit', '#popup-time-form', function (e) {
+    e.preventDefault();
+
+    let time = $(this).find('input[name="time"]').val();
+    let date_block = $(this).find('.-selected-');
+
+    let day = date_block.attr('data-date');
+    let month = date_block.attr('data-month');
+    let year = date_block.attr('data-year')
+
+
+    let date_value = setDate(year, month, day);
+
+    $('#meeting-time').val(time);
+    $('#meeting-date').val(date_value);
+
+    $('.selected_date').text(date_value + ' ' + time);
+    popupTimeWrapper.style.display = 'none';
+    popupContacts.style.display = 'block';
+    timeFinish.style.display = 'block';
+
+
+});
+
+let date_block = $(document).find('.-selected-');
+let day = date_block.attr('data-date');
+let month = date_block.attr('data-month');
+let year = date_block.attr('data-year');
+let date = new Date(year, month, day);
+
+setDate(year, month, day);
+
+$(document).on('click', '.air-datepicker-cell', function(e) {
+    let date_block = $(document).find('.-selected-');
+    let day = date_block.attr('data-date');
+    let month = date_block.attr('data-month');
+    let year = date_block.attr('data-year');
+
+
+    setDate(year, month, day);
+});
+
+function setDate(year, month, day) {
+
+    let date = new Date(year, month, day);
+    var monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+// Массив с названиями дней недели на русском языке
+    var dayNames = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+
+// Получение номера дня в неделе (0 - воскресенье, 1 - понедельник, ..., 6 - суббота)
+    var dayOfWeek = date.getDay();
+
+// Получение названия дня недели на русском языке
+    var dayOfWeekName = dayNames[dayOfWeek];
+
+// Получение названия месяца на русском языке
+    var monthName = monthNames[month];
+
+// Формирование строки с результатом
+    var result = day + ' ' + monthName + ', ' + dayOfWeekName;
+
+    console.log(result);
+    $('.dates__date').text(result);
+
+    return result;
+}
+
+$(document).on('submit', '#popup-meeting-form', function (e) {
+    e.preventDefault();
+    console.log('Встреча');
+
+    let errors = 0;
+    $(this).find('input').each(function () {
+        console.log($(this));
+        // Проверяем значения
+        let required = $(this).attr('data-required');
+        if (required !== undefined) {
+            let value = $(this).val();
+            let type = $(this).attr('type');
+            if (type === 'phone') {
+                if (value.length < 18) {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            } else if (type === 'checkbox') {
+                if ($(this).is(':checked')) {
+                    $('.js-checkbox').removeClass('_invalid');
+                } else {
+                    $('.js-checkbox').addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                }
+            } else {
+                if (value === '') {
+                    $(this).addClass('_invalid');
+                    errors++;
+                    console.log($(this));
+                } else {
+                    $(this).removeClass('_invalid');
+                }
+            }
+        }
+
+    });
+
+    if (errors <= 0) {
+
+        let form_data = $(this).serialize();
+
+        $.ajax({
+            url: '/local/ajax/forms/MeetingForm.php',
+            method: 'POST',
+            dataType: 'html',
+            data: form_data,
+            success: function (response) {
+                //
+                // popupClose(e.target.closest('.popup'));
+                // popupOpen(document.getElementById('popup'));
+                console.log(response)
+                popupFirstChild.style.display = 'none';
+                popupTimeWrapper.style.display = 'none';
+                popupContacts.style.display = 'none';
+                meetingCompleteInfo.style.display = 'flex';
+                meetingCompleteImg.classList.add('_show');
+            }
+        })
+    }
+});
+
+

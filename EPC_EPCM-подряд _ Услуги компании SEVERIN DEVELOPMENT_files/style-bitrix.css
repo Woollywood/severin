@@ -1,0 +1,9 @@
+#canvasWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 28%;
+}
+.team_fix-height {
+    overflow: hidden;
+}
