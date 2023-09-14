@@ -2,9 +2,20 @@
   min-width: 0;
 }
 .advantages__body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 252px 0 264px;
+  padding: 190px 0 264px;
+  margin: 62px 0 0;
+}
+@media (min-width: 991.98px) {
+  .advantages__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 991.98px) {
+  .advantages__body {
+    padding: 80px 0 180px;
+    margin: 40px 0 0;
+  }
 }
 .advantages__title {
   color: #363636;
@@ -22,16 +33,25 @@
   font-weight: 500;
   line-height: normal;
 }
-.advantages__title:not(:last-child) {
-  margin-bottom: 64px;
+@media (min-width: 991.98px) {
+  .advantages__title:not(:last-child) {
+    margin-bottom: 64px;
+  }
+}
+@media (max-width: 991.98px) {
+  .advantages__title {
+    text-align: center;
+  }
 }
 .advantages__slider-wrapper-outer {
   overflow: hidden;
   margin-left: -126px !important;
   margin-right: -126px !important;
 }
-.advantages__slider-wrapper-outer:not(:last-child) {
-  margin-bottom: 42px;
+@media (min-width: 991.98px) {
+  .advantages__slider-wrapper-outer:not(:last-child) {
+    margin-bottom: 42px;
+  }
 }
 .advantages__slide {
   display: flex;
@@ -51,7 +71,7 @@
   line-height: normal;
 }
 .advantages__slide-title:not(:last-child) {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 .advantages__slide-text {
   color: #363636;
@@ -59,7 +79,7 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 30px;
+  line-height: 34px;
 }
 .advantages__slider-pagination {
   position: static !important;
@@ -70,6 +90,16 @@
 .advantages__image {
   position: relative;
 }
+@media (min-width: 991.98px) {
+  .advantages__image {
+    transform: translateY(-12%);
+  }
+}
+@media (max-width: 991.98px) {
+  .advantages__image {
+    padding-bottom: 80%;
+  }
+}
 .advantages__image img {
   position: absolute;
   top: 0;
@@ -78,7 +108,12 @@
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
-  transform: scale(2.2);
+  transform: scale(1.5);
+}
+@media (max-width: 991.98px) {
+  .advantages__image img {
+    transform: scale(1.2);
+  }
 }
 
 .swiper-pagination-bullet {

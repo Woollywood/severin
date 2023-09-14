@@ -7,21 +7,13 @@ window.addEventListener('load', (windowEvent) => {
 	const slides = document.querySelectorAll('.advantages__slide');
 	const sliderDots = document.querySelectorAll('.advantages__slider-dot');
 
-	gsap.to(advantagesBody, {
-		scrollTrigger: {
-			trigger: advantagesBody,
-			start: 'center center',
-			pin: true,
-			scrub: 1,
-		},
-	});
-
 	if (document.querySelector('.advantages__slider-wrapper-outer')) {
 		new Swiper('.advantages__slider-wrapper-outer', {
 			observer: true,
 			observeParents: true,
 			slidesPerView: 1,
 			spaceBetween: 50,
+			speed: 800,
 
 			pagination: {
 				el: '.advantages__slider-pagination',
@@ -55,29 +47,79 @@ window.addEventListener('load', (windowEvent) => {
 					let step = 100 / e.slides.length;
 					let curSlide = 0;
 
-					gsap.to(sliderWrapper, {
-						scrollTrigger: {
-							trigger: slider,
-							start: 'center center',
-							// end: `${slides.length} * 1000`,
-							scrub: 1,
-							onUpdate: ({ progress }) => {
-								let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
-								console.log(curSlide);
+					function getScrollHeight(wrapper, slides, mul = 1) {
+						let slideHeight = wrapper.offsetHeight;
+						return slideHeight * slides.length * mul;
+					}
 
-								if (curSlide !== stage) {
-									curSlide = stage;
-									e.slideTo(curSlide, 0);
-
-									gsap.from(e.slides[curSlide], {
-										x: -150,
-										opacity: 0,
-										duration: 2,
-										ease: 'elastic',
-									});
-								}
+					let mm = gsap.matchMedia();
+					mm.add('(min-width: 991.98px)', () => {
+						gsap.to(advantagesBody, {
+							scrollTrigger: {
+								trigger: advantagesBody,
+								start: 'center center',
+								end: getScrollHeight(sliderWrapper, e.slides),
+								pin: true,
+								scrub: 1,
+								invalidateOnRefresh: true,
 							},
-						},
+						});
+
+						gsap.to(sliderWrapper, {
+							scrollTrigger: {
+								trigger: slider,
+								start: 'center center',
+								end: getScrollHeight(sliderWrapper, e.slides),
+								scrub: 1,
+								invalidateOnRefresh: true,
+								onUpdate: ({ progress }) => {
+									let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
+
+									if (curSlide !== stage) {
+										curSlide = stage;
+										e.slideTo(curSlide, 0);
+
+										gsap.from(e.slides[curSlide], {
+											x: -150,
+											opacity: 0,
+											duration: 4,
+											ease: 'elastic',
+										});
+									}
+								},
+							},
+						});
+					});
+
+					mm.add('(max-width: 991.98px)', () => {
+						gsap.to(advantagesBody, {
+							scrollTrigger: {
+								trigger: advantagesBody,
+								start: 'center center',
+								end: getScrollHeight(sliderWrapper, e.slides, 2),
+								pin: true,
+								scrub: 1,
+								invalidateOnRefresh: true,
+							},
+						});
+
+						gsap.to(sliderWrapper, {
+							scrollTrigger: {
+								trigger: slider,
+								start: 'center center',
+								end: getScrollHeight(sliderWrapper, e.slides, 2),
+								scrub: 1,
+								invalidateOnRefresh: true,
+								onUpdate: ({ progress }) => {
+									let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
+
+									if (curSlide !== stage) {
+										curSlide = stage;
+										e.slideTo(curSlide, 0);
+									}
+								},
+							},
+						});
 					});
 				},
 			},
