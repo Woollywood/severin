@@ -54,70 +54,46 @@ window.addEventListener('load', (windowEvent) => {
 
 					let mm = gsap.matchMedia();
 					mm.add('(min-width: 991.98px)', () => {
-						gsap.to(advantagesBody, {
-							scrollTrigger: {
-								trigger: advantagesBody,
-								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 3),
-								pin: true,
-								scrub: 1,
-								invalidateOnRefresh: true,
-							},
-						});
+						ScrollTrigger.create({
+							trigger: slider,
+							start: 'center center',
+							end: getScrollHeight(sliderWrapper, e.slides, 3),
+							scrub: 1,
+							invalidateOnRefresh: true,
+							pin: advantagesBody,
+							onUpdate: ({ progress }) => {
+								let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
 
-						gsap.to(sliderWrapper, {
-							scrollTrigger: {
-								trigger: slider,
-								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 3),
-								scrub: 1,
-								invalidateOnRefresh: true,
-								onUpdate: ({ progress }) => {
-									let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
+								if (curSlide !== stage) {
+									curSlide = stage;
+									e.slideTo(curSlide, 0);
 
-									if (curSlide !== stage) {
-										curSlide = stage;
-										e.slideTo(curSlide, 0);
-
-										gsap.from(e.slides[curSlide], {
-											x: -150,
-											opacity: 0,
-											duration: 4,
-											ease: 'elastic',
-										});
-									}
-								},
+									gsap.from(e.slides[curSlide], {
+										x: -150,
+										opacity: 0,
+										duration: 4,
+										ease: 'elastic',
+									});
+								}
 							},
 						});
 					});
 
 					mm.add('(max-width: 991.98px)', () => {
-						gsap.to(advantagesBody, {
-							scrollTrigger: {
-								trigger: advantagesBody,
-								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 4),
-								pin: true,
-								scrub: 1,
-								invalidateOnRefresh: true,
-							},
-						});
+						ScrollTrigger.create({
+							trigger: slider,
+							start: 'center center',
+							end: getScrollHeight(sliderWrapper, e.slides, 4),
+							scrub: 1,
+							invalidateOnRefresh: true,
+							pin: advantagesBody,
+							onUpdate: ({ progress }) => {
+								let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
 
-						gsap.to(sliderWrapper, {
-							scrollTrigger: {
-								trigger: slider,
-								start: 'center center',
-								end: getScrollHeight(sliderWrapper, e.slides, 4),
-								scrub: 1,
-								invalidateOnRefresh: true,
-								onUpdate: ({ progress }) => {
-									let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
-
-									if (curSlide !== stage) {
-										curSlide = stage;
-										e.slideTo(curSlide, 0);
-									}
-								},
+								if (curSlide !== stage) {
+									curSlide = stage;
+									e.slideTo(curSlide, 0);
+								}
 							},
 						});
 					});
