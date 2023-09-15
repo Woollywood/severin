@@ -79,10 +79,29 @@ window.addEventListener('load', (windowEvent) => {
 						});
 					});
 
-					mm.add('(max-width: 991.98px)', () => {
+					mm.add('(max-width: 991.98px) and (min-width: 479.98px)', () => {
 						ScrollTrigger.create({
 							trigger: slider,
-							start: 'center center',
+							start: 'top 140px',
+							end: getScrollHeight(sliderWrapper, e.slides, 4),
+							scrub: 1,
+							invalidateOnRefresh: true,
+							pin: advantagesBody,
+							onUpdate: ({ progress }) => {
+								let stage = Math.trunc(Math.abs(progress * 100 - 1) / step);
+
+								if (curSlide !== stage) {
+									curSlide = stage;
+									e.slideTo(curSlide, 0);
+								}
+							},
+						});
+					});
+
+					mm.add('(max-width: 479.98px)', () => {
+						ScrollTrigger.create({
+							trigger: slider,
+							start: 'top 86px',
 							end: getScrollHeight(sliderWrapper, e.slides, 4),
 							scrub: 1,
 							invalidateOnRefresh: true,
