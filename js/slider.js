@@ -1,13 +1,13 @@
-gsap.registerPlugin(ScrollTrigger);
-
 window.addEventListener('load', (windowEvent) => {
-	const advantagesBody = document.querySelector('.advantages__body');
-	const slider = document.querySelector('.advantages__slider');
-	const sliderWrapper = document.querySelector('.advantages__slider-wrapper');
-	const slides = document.querySelectorAll('.advantages__slide');
-	const sliderDots = document.querySelectorAll('.advantages__slider-dot');
-
 	if (document.querySelector('.advantages__slider-wrapper-outer')) {
+		gsap.registerPlugin(ScrollTrigger);
+
+		const advantagesBody = document.querySelector('.advantages__body');
+		const slider = document.querySelector('.advantages__slider');
+		const sliderWrapper = document.querySelector('.advantages__slider-wrapper');
+		const slides = document.querySelectorAll('.advantages__slide');
+		const sliderDots = document.querySelectorAll('.advantages__slider-dot');
+
 		new Swiper('.advantages__slider-wrapper-outer', {
 			observer: true,
 			observeParents: true,
