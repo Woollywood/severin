@@ -428,6 +428,16 @@ if (document.querySelector('.slider2__container')) {
 	});
 }
 if (document.querySelector('.projects-slider__container')) {
+	let slides = document.querySelectorAll('.items__item-wrap.swiper-slide');
+	if (slides.length < 6) {
+		let sliderWrapper = document.querySelector('.projects-slider__wrapper.swiper-wrapper');
+		let cloneSlides = [];
+		slides.forEach((slide) => {
+		cloneSlides.push(slide.cloneNode(true));
+		});
+		sliderWrapper.append(...cloneSlides);
+	}
+
 	const myImageSlider3 = new Swiper('.projects-slider__container', {
 		// НАСТРОЙКИ
 
